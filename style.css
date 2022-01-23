@@ -2,6 +2,14 @@
     padding: 0;
     margin: 0;
 }
+body{
+    display: flex;
+    flex-direction: column;
+}
+.score{
+    display: flex;
+    justify-content: center;
+}
 
 #game{
     width: 400px;
@@ -20,6 +28,60 @@
     left: 190px;
     z-index: 1000000;
 
+}
+
+#scoreBox{
+    
+    margin: 20px;
+    font-size: 39px;
+    font-weight: bold;
+    font-family: 'Recursive', sans-serif;
+    color: black;
+}
+
+#highBox{
+
+    margin: 20px;
+    font-size: 39px;
+    font-weight: bold;
+    font-family: 'Recursive', sans-serif;
+    color: black;
+    
+    
+}
+
+.gameOver{
+    display: flex;
+    font-size: 53px;
+    visibility: hidden;
+    text-align: center;
+    font-family: 'Recursive', sans-serif;
+}
+
+
+.retry{
+    font-family: 'Recursive', sans-serif; 
+    font-size: 20px;
+    width: 146.883px;
+    height: 43px;
+    margin: auto;
+    visibility: hidden;
+    margin-bottom: 30px;
+   
+}
+
+.btn_div{
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.btn{
+    font-family: 'Recursive', sans-serif; 
+    font-size: 20px;
+    height: 50px;
+    width: 100px;
+    margin: 10px;
 }
 
 .block{
@@ -41,3 +103,28 @@
 
 
 
+@media only screen and (max-width:800px){
+    .btn_div{
+        visibility: visible;
+        
+    }
+    #scoreBox{
+    
+        
+        font-size: 20px;
+        font-weight: bold;
+        font-family: 'Recursive', sans-serif;
+        color: black;
+    }
+    
+    #highBox{
+        
+        font-size: 20px;
+        font-weight: bold;
+        font-family: 'Recursive', sans-serif;
+        color: black;
+       
+        
+    }
+
+  }

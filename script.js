@@ -1,9 +1,24 @@
 var character = document.getElementById("character");
 var game = document.getElementById("game");
 var interval;
+var score = 0;
 both = 0;
+var counter = 0;
+var currentBlocks = [];
+
+let highScore = localStorage.getItem("ballHighScore");
+
+if(highScore === null){
+    highScoreVal = 0;
+    localStorage.setItem("ballHighScore", JSON.stringify(highScoreVal))
+} else {
+    highScoreVal = JSON.parse(highScore)
+    highBox.innerHTML = "High Score: " + highScore
+}
 
 function moveLeft() {
+
+    // for moving left
     var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
     if (left > 0) {
         character.style.left = left - 2 + "px";
@@ -12,7 +27,8 @@ function moveLeft() {
 }
 
 function moveRight() {
-    console.log("right")
+
+    //for moving right
     var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
     if (left < 380) {
         character.style.left = left + 2 + "px";
@@ -24,6 +40,7 @@ function moveRight() {
 
 document.addEventListener("keydown", event => {
 
+    //keyboard response
     if (both == 0) {
         both++;
         if (event.key === "ArrowLeft") {
@@ -42,119 +59,131 @@ document.addEventListener("keyup", event => {
 })
 
 
-function keepMovingRight(){
-    if(both == 0){
+//button reponse
+function keepMovingRight() {
+    if (both == 0) {
         both = 1;
         interval = setInterval(moveRight, 1);
     }
-    
+
 }
-function keepMovingLeft(){
-    if(both == 0){
+function keepMovingLeft() {
+    if (both == 0) {
         both = 1;
         interval = setInterval(moveLeft, 1);
     }
-    
+
 }
-function stopMoving(){
+function stopMoving() {
     clearInterval(interval);
     both = 0;
 }
 
-var block = document.createElement("div");
-var hole = document.createElement("div");
-block.setAttribute("class", "block")
-hole.setAttribute("class", "hole")
-block.setAttribute("id", "block")
-hole.setAttribute("id", "hole")
-var random = Math.floor(Math.random() * 360)
-game.appendChild(block);
-game.appendChild(hole);
 
+var blocks = setInterval(function () {
 
+    //getting the last created block
+    var blockLast = document.getElementById("block"+(counter-1));
+    var holeLast = document.getElementById("hole"+(counter-1));
 
+    if(counter > 0){
+        var blockLastTop = parseInt(window.getComputedStyle(blockLast).getPropertyValue("top"));
+    var holeLastTop = parseInt(window.getComputedStyle(holeLast).getPropertyValue("top"));
+    }
+    
 
+     //only create new block if have enough room or counter == 0 meaning there is currently no block present
+    if(blockLastTop < 400 || counter == 0){  
+        var block = document.createElement("div");  //creating block and holes
+        var hole = document.createElement("div");
+        block.setAttribute("class", "block")   
+        hole.setAttribute("class", "hole")
+        block.setAttribute("id", "block"+counter)  //adding uniqure id to block and holes created using counter
+        hole.setAttribute("id", "hole"+counter)
+    
+        block.style.top = blockLastTop + 100 + "px";  //new block 100px below old block
+        hole.style.top = holeLastTop + 100 + "px"; 
+    
+        var random = Math.floor(Math.random() * 360)
+        hole.style.left = random + "px";
+        game.appendChild(block);
+        game.appendChild(hole);
+        currentBlocks.push(counter); //add the counter of the created block in the array
+        counter++;
 
+    }
 
+    var characterTop =  parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+    var characterLeft =  parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+    var drop = 0;
+    if(characterTop <= 0){
+    
+        retry = document.querySelector('.retry');
+        retry.style.visibility = 'visible';
+        
+        clearInterval(blocks);
+        location.reload;
+    }
 
+    for(var i = 0; i<currentBlocks.length; i++){
+        let current = currentBlocks[i]; //counter no. of current block of array
+        let ihole = document.getElementById("hole"+current);  
+        let iblock = document.getElementById("block"+current);
 
+        var iblockTop = parseFloat(window.getComputedStyle(iblock).getPropertyValue("top"));
+        let iholeLeft = parseFloat(window.getComputedStyle(ihole).getPropertyValue("left"));
 
+        //shifting the block and hole 0.5px  upside, as we are in a setInterval fucntion. the blocks/holes will keep moving
+        iblock.style.top = (iblockTop - 0.5) + "px";
+        ihole.style.top = (iblockTop - 0.5) + "px";
 
+        if(iblockTop< -20){
+            //incrementing score
+            score += 1;
+            currentBlocks.shift();  //removing first element from array that is current block
+            iblock.remove();
+            ihole.remove();
+        }
 
-
-////adding touch support
-
-function swipedetect(el, callback) {
-
-    var touchsurface = el,
-        swipedir,
-        startX,
-        startY,
-        distX,
-        distY,
-        threshold = 60, //required min distance traveled to be considered swipe
-        restraint = 100, // maximum distance allowed at the same time in perpendicular direction
-        allowedTime = 300, // maximum time allowed to travel that distance
-        elapsedTime,
-        startTime,
-        handleswipe = callback || function (swipedir) { }
-
-    touchsurface.addEventListener('touchstart', function (e) {
-        var touchobj = e.changedTouches[0]
-        swipedir = 'none'
-        dist = 0
-        startX = touchobj.pageX
-        startY = touchobj.pageY
-        startTime = new Date().getTime() // record time when finger first makes contact with surface
-        e.preventDefault()
-    }, false)
-
-    touchsurface.addEventListener('touchmove', function (e) {
-        e.preventDefault() // prevent scrolling when inside DIV
-    }, false)
-
-    touchsurface.addEventListener('touchend', function (e) {
-        var touchobj = e.changedTouches[0]
-        distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
-        distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
-        elapsedTime = new Date().getTime() - startTime // get time elapsed
-        if (elapsedTime <= allowedTime) { // first condition for awipe met
-            if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) { // 2nd condition for horizontal swipe met
-                swipedir = (distX < 0) ? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
-            }
-            else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint) { // 2nd condition for vertical swipe met
-                swipedir = (distY < 0) ? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
+        if(iblockTop - 20 < characterTop && iblockTop>characterTop){
+            drop++;
+            if(iholeLeft <= characterLeft && iholeLeft+20>=characterLeft){ //currently over a hole
+                drop = 0;
             }
         }
-        handleswipe(swipedir)
-        e.preventDefault()
-    }, false)
+
+    }
+
+    //changing high score
+    if(score>highScoreVal){
+        highScoreVal = score;
+        localStorage.setItem("ballHighScore", JSON.stringify(highScoreVal))
+        highBox.innerHTML = "High Score: " + highScoreVal
+    }
+    scoreBox.innerHTML = "Score: " + score;
+
+    if(drop==0){
+        if(characterTop < 480){
+            character.style.top = (characterTop + 2) + "px"
+        }
+        
+    }else{
+        character.style.top = (characterTop - 0.5) + "px"
+    }
+   
+
+}, 1);
+
+
+
+function reload(){
+    score = 0;
+    location.reload();
 }
 
 
-window.addEventListener('load', function () {
-    var el = document.getElementById('game')
 
 
-    swipedetect(el, function (swipedir) {
-        if (swipedir != 'none') {
-
-            if (swipedir == 'left') {
-                var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
-                if (left > 0) {
-                    character.style.left = left - 10 + "px";
-                }
-            }
-
-            if (swipedir == 'right'){
-                var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
-                if (left < 380) {
-                    character.style.left = left + 10 + "px";
-                }
-            }
-           
 
 
-        }
-    })
-}, false)
+
