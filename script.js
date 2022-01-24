@@ -21,7 +21,8 @@ function moveLeft() {
     // for moving left
     var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
     if (left > 0) {
-        character.style.left = left - 2 + "px";
+        character.style.left = left - 2 + ((score/200) <= 1.5 ? (score/200) : 1.5)  + "px";
+        console.log( "Left speed: ",  2 + ((score/200) <= 1.5 ? (score/200) : 1.5))
     }
 
 }
@@ -31,7 +32,8 @@ function moveRight() {
     //for moving right
     var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
     if (left < 380) {
-        character.style.left = left + 2 + "px";
+        character.style.left = left + 2 + ((score/200) <= 1.5 ? (score/200) : 1.5) + "px";
+        console.log( "Right speed: ",  2 + ((score/200) <= 1.5 ? (score/200) : 1.5)) ;
     }
 
 }
@@ -166,7 +168,7 @@ var blocks = setInterval(function () {
     if(drop==0){
         if(characterTop < 480){
             character.style.top = (characterTop + 2 + ((score/200) <= 1.5 ? (score/200) : 1.5)) + "px"
-            console.log( "Drop speed: ", ((score/200) <= 1.5 ? (score/200) : 1.5)) ; 
+             
         }
         
     }else{
