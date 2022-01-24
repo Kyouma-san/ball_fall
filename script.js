@@ -134,8 +134,9 @@ var blocks = setInterval(function () {
         let iholeLeft = parseFloat(window.getComputedStyle(ihole).getPropertyValue("left"));
 
         //shifting the block and hole 0.5px  upside, as we are in a setInterval fucntion. the blocks/holes will keep moving
-        iblock.style.top = (iblockTop - 0.5) + "px";
-        ihole.style.top = (iblockTop - 0.5) + "px";
+        iblock.style.top = (iblockTop - ((score/100) <= 1 ? (score/100) : 1) - 0.5) + "px";
+        ihole.style.top = (iblockTop - ((score/100) <= 1 ? (score/100) : 1)  - 0.5 )+ "px";
+        
 
         if(iblockTop< -5){
             //incrementing score
@@ -164,11 +165,12 @@ var blocks = setInterval(function () {
 
     if(drop==0){
         if(characterTop < 480){
-            character.style.top = (characterTop + 2) + "px"
+            character.style.top = (characterTop + 2 + ((score/200) <= 1.5 ? (score/200) : 1.5)) + "px"
+            console.log( "Drop speed: ", ((score/200) <= 1.5 ? (score/200) : 1.5)) ; 
         }
         
     }else{
-        character.style.top = (characterTop - 0.5) + "px"
+        character.style.top = (characterTop - ((score/100) <= 1 ? (score/100) : 1)  - 0.5) + "px"
     }
    
 

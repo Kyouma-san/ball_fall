@@ -5,6 +5,7 @@
 body{
     display: flex;
     flex-direction: column;
+    background-image: url('bg2.jpg');
 }
 .score{
     display: flex;
@@ -16,12 +17,15 @@ body{
     height: 500px;
     border: 1px solid black;
     margin: auto; 
+    background-color: rgb(154, 111, 204);
+    border: 10px solid rgb(90, 32, 95);
 }
 
 #character{
     width: 20px;
     height: 20px;
-    background-color: red;
+    background-color: rgb(97, 12, 78);
+    border: 2px solid black;
     border-radius: 50%;
     position: relative;
     top:440px;
@@ -29,14 +33,16 @@ body{
     z-index: 1000000;
 
 }
-
+.arrow{
+    font-size: 39px;
+}
 #scoreBox{
     
     margin: 20px;
     font-size: 39px;
     font-weight: bold;
     font-family: 'Recursive', sans-serif;
-    color: black;
+    color: rgb(132, 125, 231);
 }
 
 #highBox{
@@ -45,7 +51,7 @@ body{
     font-size: 39px;
     font-weight: bold;
     font-family: 'Recursive', sans-serif;
-    color: black;
+    color: rgb(132, 125, 231);
     
     
 }
@@ -74,6 +80,7 @@ body{
     visibility: hidden;
     display: flex;
     justify-content: center;
+    z-index: 100;
 }
 
 .btn{
@@ -87,7 +94,7 @@ body{
 .block{
      width: 400px;
      height: 20px;
-     background-color: black;
+     background-color: rgb(49, 25, 88);
      position: relative;
      top: 100px;
      margin-top: -20px;
@@ -95,7 +102,7 @@ body{
 .hole{
     width: 40px;
     height: 20px;
-    background-color: white;
+    background-color: rgb(154, 111, 204);
     position: relative;
     top: 100px;
     margin-top: -20px;
@@ -114,7 +121,7 @@ body{
         font-size: 20px;
         font-weight: bold;
         font-family: 'Recursive', sans-serif;
-        color: black;
+        
     }
     
     #highBox{
@@ -122,8 +129,7 @@ body{
         font-size: 20px;
         font-weight: bold;
         font-family: 'Recursive', sans-serif;
-        color: black;
-       
+        
         
     }
 
