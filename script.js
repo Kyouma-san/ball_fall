@@ -181,9 +181,3 @@ function reload(){
     location.reload();
 }
 
-
-
-
-
-
-
