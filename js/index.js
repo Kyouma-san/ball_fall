@@ -137,7 +137,7 @@ var blocks = setInterval(function () {
         iblock.style.top = (iblockTop - 0.5) + "px";
         ihole.style.top = (iblockTop - 0.5) + "px";
 
-        if(iblockTop< -20){
+        if(iblockTop< -5){
             //incrementing score
             score += 1;
             currentBlocks.shift();  //removing first element from array that is current block
