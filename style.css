@@ -2,6 +2,17 @@
     padding: 0;
     margin: 0;
 }
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+  }
+
 body{
     display: flex;
     flex-direction: column;
@@ -18,7 +29,7 @@ body{
     border: 1px solid black;
     margin: auto; 
     background-color: rgb(154, 111, 204);
-    border: 10px solid rgb(90, 32, 95);
+    border: 10px solid rgb(49, 25, 88);
 }
 
 #character{
@@ -42,7 +53,7 @@ body{
     font-size: 39px;
     font-weight: bold;
     font-family: 'Recursive', sans-serif;
-    color: rgb(132, 125, 231);
+    color: rgb(197, 136, 238);
 }
 
 #highBox{
@@ -51,7 +62,7 @@ body{
     font-size: 39px;
     font-weight: bold;
     font-family: 'Recursive', sans-serif;
-    color: rgb(132, 125, 231);
+    color: rgb(197, 136, 238);
     
     
 }
@@ -89,6 +100,7 @@ body{
     height: 50px;
     width: 100px;
     margin: 10px;
+    background-color: rgb(197, 136, 238);
 }
 
 .block{
